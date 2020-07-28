@@ -1,8 +1,4 @@
-import ToyReact from './ToyReact.js'
-import App from './app.jsx'
+import ToyReact from "./ToyReact.js";
+import App from "./app.jsx";
 
-const app = <App>
-  <span>!</span>
-</App>
-
-ToyReact.render(app, document.body)
+ToyReact.render(<App />, document.body);
