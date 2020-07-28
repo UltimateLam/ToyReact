@@ -22,7 +22,7 @@ class TextWrapper {
   }
 }
 
-export class Component {
+class Component {
   constructor() {
     this.children = []
   }
@@ -38,39 +38,46 @@ export class Component {
  }
 }
 
-export default {
-  createElement(type, attr, ...children) {
-    let el
-    if (typeof type === 'string') {
-      el = new ElementWrapper(type)
-    } else {
-      el  = new type
-    }
+const createElement = (type, attr, ...children) => {
+  let el
+  if (typeof type === 'string') {
+    el = new ElementWrapper(type)
+  } else {
+    el  = new type
+  }
 
-    for (const name in attr) {
-      el.setAttribute(name, attr[name])
-    }
+  for (const name in attr) {
+    el.setAttribute(name, attr[name])
+  }
 
-    let insertChildren = (children) => {
-      for(const child of children) {
-        if(typeof child === 'object' && child instanceof Array) {
-          insertChildren(child)
-        } else {
-          if(!(child instanceof Component) && !(child instanceof ElementWrapper) && !(child instanceof TextWrapper)) {
-            child = String(child)
-          }
-          if(typeof child === 'string') {
-            child = new TextWrapper(child)
-          }
-          el.appendChild(child)
+  let insertChildren = (children) => {
+    for(const child of children) {
+      if(typeof child === 'object' && child instanceof Array) {
+        insertChildren(child)
+      } else {
+        if(!(child instanceof Component) && !(child instanceof ElementWrapper) && !(child instanceof TextWrapper)) {
+          child = String(child)
         }
+        if(typeof child === 'string') {
+          child = new TextWrapper(child)
+        }
+        el.appendChild(child)
       }
     }
-    insertChildren(children)
-
-    return el
-  },
-  render(vdom, el) {                                                                                                            
-    vdom.mountTo(el)
   }
+  insertChildren(children)
+
+  return el
 }
+
+const render = (vdom, el) => {                                                                                                            
+  vdom.mountTo(el)
+}
+
+const ToyReact = {
+  Component,
+  createElement,
+  render
+}
+
+export default ToyReact

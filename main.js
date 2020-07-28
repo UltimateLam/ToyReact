@@ -1,13 +1,8 @@
-import ToyReact, { Component } from './ToyReact'
+import ToyReact from './ToyReact.js'
+import App from './app.jsx'
 
-class App extends Component {
-  render() {
-    return <div>
-      <span>Hello</span>
-      <span>World</span>
-      {this.children}
-    </div>
-  }
-}
+const app = <App>
+  <span>!</span>
+</App>
 
-ToyReact.render(<App><span>!</span></App>, document.body)
+ToyReact.render(app, document.body)
